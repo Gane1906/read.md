@@ -1,138 +1,50 @@
-# read.md
-<!DOCTYPE html> 
-<!-- 
-To change this license header, choose License Headers in Project Properties. 
-To change this template file, choose Tools | Templates 
-and open the template in the editor. 
---> 
-<html lang="en"> 
-    <head> 
-        <title>Bootstrap Example</title> 
-        <meta charset="utf-8"> 
-        <meta name="viewport" content="width=device-width, initial-scale=1"> 
-        <link rel="stylesheet" 
-              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> 
-        <script 
-        src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
-        <script 
-        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
-    </head> 
-    <body> 
-        <div class="container"> 
-            <h2>Vertical (basic) form</h2> 
-            <form id="empForm" method="post"> 
-                <div class="form-group"> 
-                    <span><label for="empId">Email:</label> <label id="email"> 
-                        </label></span> 
-                    <input type="text" class="form-control" name="empId" id="email" 
-                           placeholder="Enter Email" required> 
-                </div> 
-                <div class="form-group"> 
-                    <label for="empName">ID:</label>  	<input type="text" class="form-control" id="id" 
-                                                                         placeholder="Enter ID" name="id"> 
-                </div> 
-                <div class="form-group"> 
-                    <label for="empEmail">Name:</label> 
-                    <input type="email" class="form-control" id="name" 
-                           placeholder="Enter Name" name="name"> 
-                </div> 
-                <input type="button" class="btn btn-primary" id="empSave" value="Save" onclick="saveData();"> 
-            </form> 
-        </div> 
+Put:
 
-        <script>
-            $("#email").focus();
-
-            function validateAndGetFormData() {
-                var emailVar = $("#email").val();
-                if (empIdVar === "") {
-                    alert("Email required");
-                    $("#empId").focus();
-                    return "";
-                }
-
-                var idVar = $("#id").val();
-                if (empNameVar === "") {
-                    alert("Student id required");
-                    $("#empName").focus();
-                    return "";
-                }
-
-                var nameVar = $("#name").val();
-                if (empEmailVar === "") {
-                    alert("Name required");
-                    $("#empEmail").focus();
-                    return "";
-                }
-                var jsonStrObj = {
-                    email: emailVar,
-                    id: idVar,
-                    name: nameVar
-                };
-
-                return JSON.stringify(jsonStrObj);
-            }
-
-            // This method is used to create PUT Json request. 
-            function createPUTRequest(connToken, jsonObj, dbName, relName) {
-                var putRequest = "{\n"
-                        + "\"token\" : \""
-                        + connToken
-                        + "\","
-                        + "\"dbName\": \""
-                        + dbName
-                        + "\",\n" + "\"cmd\" : \"PUT\",\n"
-                        + "\"rel\" : \""
-                        + relName + "\","
-                        + "\"jsonStr\": \n"
-                        + jsonObj
-                        + "\n"
-                        + "}";
-                return putRequest;
-            }
-
-            function executeCommand(reqString, dbBaseUrl, apiEndPointUrl) {
-                var url = dbBaseUrl + apiEndPointUrl;
-                var jsonObj;
-                $.post(url, reqString, function (result) {
-                    jsonObj = JSON.parse(result);
-                }).fail(function (result) {
-                    var dataJsonObj = result.responseText;
-                    jsonObj = JSON.parse(dataJsonObj);
-                });
-                return jsonObj;
-            }
-
-            function resetForm() {
-                $("#email").val("");
-                $("#id").val("");
-                $("#name").val("");
-                $("#email").focus();
-            }
+{
+    "token": "90939173|-31949293760554447|90940253",
+    "cmd": "PUT",
+    "dbName": "Student",
+    "rel": "Student-Rel",
+    "jsonStr": {
+        "id": "2",
+        "name": "Rishi",
+        "email": "Rishi@gmail.com",
+        "mobileno": "9967827651"
+      "marks":56
+    }
+}
 
 
-            function saveData() {
+{
+    "token": "90939173|-31949293760554447|90940253",
+    "dbName": "Student",
+    "cmd": "GET_BY_KEY",
+    "rel": "Student-Rel",
+    "jsonStr": {
+        "name": "Soniya"
+    }
 
-                var jsonStr = validateAndGetFormData();
-                if (jsonStr === "") {
-                    return;
-                }
+}  
 
-                var putReqStr = createPUTRequest("90939173|-31949293760554447|90940253",
-                        jsonStr, "STUDENT", "STUDENT-REL");
+{
+    "token": "90939173|-31949293760554447|90940253",
+    "cmd": "Update",
+    "dbName": "Student",
+    "rel": "Student-Rel",
+    "jsonStr": {
+       "3":{
+         "id": "3"
+        "name": "Raju",
+        "email":"Raju@gmail.com",
+        "mobileno": 7098162348
 
-                alert(putReqStr);
-                jQuery.ajaxSetup({async: false});
-                var resultObj = executeCommand(putReqStr,
-                        "http://api.login2explore.com:5577", "/api/iml");
-                alert(JSON.stringify(resultObj));
-                jQuery.ajaxSetup({async: true});
-
-                resetForm();
-            }
-
-
-        </script> 
-
-    </body> 
-</html> 
+      },
+       "2":{
+         "marks":76,
+         "name":"Rishi Kumar"
+      },
+       "1":{
+         "marks":80
+      }
+   }
+}
